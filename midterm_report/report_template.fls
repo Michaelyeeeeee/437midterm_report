@@ -1,8 +1,8 @@
-PWD c:/Users/Conno/Downloads/purdue-stuff/junior/437/437midterm_report/midterm_report
+PWD c:/Purdue/fall26/437/midterm_report
 INPUT c:/texlive/2025/texmf.cnf
 INPUT c:/texlive/2025/texmf-dist/web2c/texmf.cnf
 INPUT c:/texlive/2025/texmf-var/web2c/pdftex/pdflatex.fmt
-INPUT c:/Users/Conno/Downloads/purdue-stuff/junior/437/437midterm_report/midterm_report/report_template.tex
+INPUT c:/Purdue/fall26/437/midterm_report/report_template.tex
 OUTPUT report_template.log
 INPUT c:/texlive/2025/texmf-dist/tex/latex/base/article.cls
 INPUT c:/texlive/2025/texmf-dist/tex/latex/base/article.cls
