@@ -53,7 +53,23 @@ To determine the tangible performance gain from the pipelined design, clock freq
 \section{Processor Design}
 
 \subsection{Single Cycle}
+The single-cycle datapath uses one ALU for arithmetic, address calculation, and branch comparisons. Operand selection supports register values and immediates. Multiplexers select operands and the result written to the register file. Memory control unit coordinates access to the shared memory.
 
+\subsection{Pipelined}
+
+In order to convert the single-cycle CPU into a pipelined processor, pipeline registers were added between stages to carry each instruction's data and control information. The pipeline was split into five stages consisting of instruction fetch, decode, execute, memory, and writeback. Forwarding and hazard units support overlapping instructions. The request unit from the single-cycle design was removed from the pipeline as it added an extra stage.
+
+
+
+The forwarding unit manages read-after-write dependencies by supplying results from memory or writeback directly to execute. It checks both operands independently and forwards the newest possible result.
+
+
+
+The hazard unit manages control hazards, structural hazards, and specifically the load-use data hazard. A load-use dependency holds fetch and decode and inserts an execute-stage bubble. Branch mispredictions and jump redirects flush younger instructions to prevent incorrect updates.
+
+
+A direct-mapped branch prediction table and branch target buffer stores two-bit saturating counters and branch targets. A valid match predicts the stored target when the counter favors taken. Otherwise fetch continues at \(PC+4\).  The original prediction travels with the instruction and is checked in memory against the actual next address. A conflicting branch replaces the entry and initializes its counter from the observed outcome.
+\clearpage
 \begin{figure}[p]
     \centering
     \includegraphics[
@@ -87,10 +103,6 @@ To determine the tangible performance gain from the pipelined design, clock freq
     \label{fig:singlecycle_exmemwb}
 \end{figure}
 
-The single-cycle datapath uses one ALU for arithmetic, address calculation, and branch comparisons. Operand selection supports register values and immediates, while writeback selects arithmetic results, loaded data, return addresses, or immediate values. Memory-request control coordinates access to the shared memory.
-
-\subsection{Pipelined}
-
 \begin{figure}[p]
     \centering
     \includegraphics[
@@ -112,22 +124,9 @@ The single-cycle datapath uses one ALU for arithmetic, address calculation, and 
     \caption{Five-Stage Pipelined Processor Datapath: Execute, MEM, and Writeback}
     \label{fig:pipelineexememwb}
 \end{figure}
-
-In order to convert the single-cycle CPU into a pipelined processor, pipeline registers were added between stages to carry each instruction's data and control information. The pipeline was split into five stages consisting of instruction fetch, decode, execute, memory, and writeback. The pipelined processor introduces hazards that were not present in the single-cycle design, so we added a hazard unit and a forwarding unit to detect and prevent errors. The request unit from the single-cycle design was removed in the pipeline, as the memory register had the same functionality, and keeping the request unit would add an extra pipeline stage.
-
-\subsection{Forwarding Unit}
-
-The forwarding unit manages read-after-write dependencies by supplying results from memory or writeback directly to execute. It checks both operands independently and forwards the newest possible result.
-
-\subsection{Hazard Unit}
-
-The hazard unit manages control hazards, structural hazards, and specifically the load-use data hazard. On an incorrect branch prediction or for a jump redirect, the hazard unit flushes any younger instructions. When multiple stages of the pipeline have simultaneous memory requests, the hazard unit stalls the instructions until the memory controller returns the access completion signals. For the load-use hazard, it holds the instruction fetch and decode stages and inserts a bubble into execute to allow the load to advance until the results are available.
-
-\subsection{Branch Prediction}
-
-In order to minimize the branch misprediction rate, a direct-mapped branch prediction table and branch target buffer were implemented. The branch prediction table consists of two-bit saturating counters that track whether a branch favors taken or not taken. The instruction's word address selects an entry, and its tag distinguishes branches sharing that index. A valid match predicts the stored target when the counter favors taken; if not, fetch continues at \(PC+4\). A conflicting branch replaces the entry and initializes its counter from the observed outcome. The original prediction travels with the instruction and is checked in memory against the actual next address. Training occurs when the branch advances, so stalls do not count an outcome repeatedly. Unconditional jumps retain the existing redirect mechanism.
-
+\clearpage
 \section{Results}
+
 
 The single-cycle and pipelined processors were evaluated using the mergesort.asm benchmark at memory latencies of 0, 2, 6, and 10 cycles. Both designs were synthesized and simulated using mapped gate timing. Maximum operating frequencies were obtained from exec\_data\_sweep.sh, while dynamic instruction counts and CPUCLK cycle counts were obtained from make system.sim. Only CPUCLK cycles were used for CPI and execution time calculations. FPGA resource utilization was obtained from build/utilization.rpt.
 
