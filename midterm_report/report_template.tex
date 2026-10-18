@@ -12,6 +12,7 @@
 % set 12pt font
 \documentclass[12pt]{article}
 % some useful packages
+\usepackage{pdflscape}
 \usepackage[pdftex]{graphicx,color}
 \usepackage{amsmath}
 \usepackage{fullpage}
@@ -49,16 +50,60 @@
 
   \section{Processor Design}
   \subsection{Single Cycle}
-  
-  \subsection{Pipelined}
-  \begin{figure}[hp]
-    \begin{center}
-      \includegraphics[width=\textwidth]{437lab4-datapath.drawio.png}
-    % You can change the type of figure to a .png, .pdf, .jpg, .mps
-    \end{center}
+  \begin{figure}[p]
+      \centering
+      \includegraphics[
+          width=\linewidth,
+          height=0.85\textheight,
+          keepaspectratio
+      ]{437lab4-Page-4p1.png}
+      \caption{Single-Cycle Processor Datapath: Fetch and Next-PC Selection}
+      \label{fig:singlecycle_fetch}
+  \end{figure}
 
-    \caption{Single Cycle Block Diagram}
-      \label{fig:processor}
+  \begin{figure}[p]
+      \centering
+      \includegraphics[
+          width=\linewidth,
+          height=0.85\textheight,
+          keepaspectratio
+      ]{437lab4-Page-4.png}
+      \caption{Single-Cycle Processor Datapath: Decode and Operand Selection}
+      \label{fig:singlecycle_decode}
+  \end{figure}
+
+  \begin{figure}[p]
+      \centering
+      \includegraphics[
+          width=\linewidth,
+          height=0.85\textheight,
+          keepaspectratio
+      ]{437lab4-Page-4p3.png}
+      \caption{Single-Cycle Processor Datapath: Execute, Memory, and Writeback}
+      \label{fig:singlecycle_exmemwb}
+  \end{figure}
+  The single-cycle datapath uses one ALU for arithmetic, address calculation, and branch comparisons. Operand selection supports register values and immediates, while writeback selects arithmetic results, loaded data, return addresses, or immediate values. Memory-request control coordinates access to the shared memory.
+  \subsection{Pipelined}
+
+  \begin{figure}[p]
+      \centering
+      \includegraphics[
+          width=\linewidth,
+          height=0.85\textheight,
+          keepaspectratio
+      ]{437lab4-datapathifde.drawio.png}
+      \caption{Five-Stage Pipelined Processor Datapath Fetch and Decode}
+      \label{fig:pipelineifde}
+  \end{figure}
+  \begin{figure}[p]
+      \centering
+      \includegraphics[
+          width=\linewidth,
+          height=0.85\textheight,
+          keepaspectratio
+      ]{437lab4-datapathexmemwb.drawio.png}
+      \caption{Five-Stage Pipelined Processor Datapath Execute, MEM, and Writeback}
+      \label{fig:pipelineexememwb}
   \end{figure}
   In order to convert the single cycle CPU into a pipelined processor pipeline registers were added between stages to carry each instructions data and control information. The pipeline was split into 5 stages consisting of instruction fetch, decode, execute, memory, and writeback. The pipelined procesor introduces hazards that weren't in the single cycle so we added a hazard and forwarding unit to detect and prevent the errors. The request unit from the single cycle was removed in the pipeline as the memory register had the same functionality and keeping the request unit would add an extra pipeline stage.
   
@@ -69,7 +114,7 @@
   The hazard unit manages control hazards, structural hazards, and specfically the load-use data hazard. On an incorrect jump or for a jump redirect the hazard unit flushes any younger instructions. When multiple stages of the pipeline have simultaneous memory requests the hazard unit stalls the instructions until the memory controller returns the access completion signals. For the load use hazard it holds the instruction fetch, and decode stages, and inserts a bubble into execute to allow the load to advance until the results are available.
   
   \subsection{Branch Prediction}
-  In order to minimize the branch prediciton rate a direct mapped branch prediction table and branch target buffer was implemented. The branch prediction table consists of two bit saturating counter that are indexed 
+  In order to minimize the branch prediciton rate a direct mapped branch prediction table and branch target buffer was implemented. The branch prediction table consists of two bit saturating counter that tracks whether a branch favors taken or not taken. The instruction's word address selects an entry, and its tag distinguishes branches sharing that index. A valid match predicts the stored target when the counter favors taken, if not fetch continues at \(PC+4\). A conflicting branch replaces the entry and initializes its counter from the observed outcome. The original prediction travels with the instruction and is checked in memory against the actual next address. Training occurs when the branch advances, so stalls do not count an outcome repeatedly. Unconditional jumps retain the existing redirect mechanism.
   % Uncomment after you create the block diagram graphic.
  
 
@@ -246,9 +291,9 @@
 
   \section{Conclusion}
 
-  The mergesort benchmark showed that the pipelined processor completed execution faster than the single-cycle at every tested memory latency. The CPI of the pipeline processor was higher due to hazards and stalls, the increased clock frequency compensated for the extra cycles. Overall the execution time was 16--22\% faster, with the largest reduction being at LAT = 0. 
+  The mergesort benchmark showed that the pipelined processor completed execution faster than the single-cycle at every tested memory latency. The CPI of the pipeline processor was higher due to hazards and stalls, the increased clock frequency compensated for the extra cycles. Its operating frequency increased from 50.03 to 87.63~MHz, which outweighed the increase in CPI from 1.277 to 1.739. Overall the execution time was 16--22\% faster, with the largest reduction being at LAT = 0. 
 
-  The increase in performance came at the cost of resource utilization. The pipeline used 1.61 time as many 
+  The increase in performance came at the cost of resource utilization. The pipeline used 3008 LUTs and 2297 registers, compared to the 1866 LUTs and 1180 registers used for the single cycle. This corresponds to an increase of 61.2\% and 94.7\%. Comparing this to the speed up of \(1.19\times\)--\(1.29\times\) provided by the pipeline its clear that the resource increases outpaced the performance gained and that theres a substantial tradeoff between hardware and performance. Overall under the tested conditions, the pipeline favors execution speed, while the single-cycle processor favors compactness and implementation simplicity.
 
   \section{Contributions}
 

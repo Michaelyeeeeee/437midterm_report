@@ -1,10 +1,10 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.28 (TeX Live 2025) (preloaded format=pdflatex 2026.2.22)  17 OCT 2026 23:17
+This is pdfTeX, Version 3.141592653-2.6-1.40.28 (TeX Live 2025) (preloaded format=pdflatex 2026.2.16)  18 OCT 2026 03:05
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
  %&-line parsing enabled.
-**c:/Purdue/fall26/437/midterm_report/report_template.tex
-(c:/Purdue/fall26/437/midterm_report/report_template.tex
+**c:/Users/Conno/Downloads/purdue-stuff/junior/437/437midterm_report/midterm_report/report_template.tex
+(c:/Users/Conno/Downloads/purdue-stuff/junior/437/437midterm_report/midterm_report/report_template.tex
 LaTeX2e <2025-11-01>
 L3 programming layer <2026-01-19>
 (c:/texlive/2025/texmf-dist/tex/latex/base/article.cls
@@ -23,12 +23,15 @@ File: size12.clo 2025/01/22 v1.4n Standard LaTeX file (size option)
 \abovecaptionskip=\skip49
 \belowcaptionskip=\skip50
 \bibindent=\dimen148
-) (c:/texlive/2025/texmf-dist/tex/latex/graphics/graphicx.sty
-Package: graphicx 2024/12/31 v1.2e Enhanced LaTeX Graphics (DPC,SPQR)
- (c:/texlive/2025/texmf-dist/tex/latex/graphics/keyval.sty
-Package: keyval 2022/05/29 v1.15 key=value parser (DPC)
-\KV@toks@=\toks17
-) (c:/texlive/2025/texmf-dist/tex/latex/graphics/graphics.sty
+) (c:/texlive/2025/texmf-dist/tex/latex/pdflscape/pdflscape.sty
+Package: pdflscape 2025-06-23 v0.14 Display of landscape pages in PDF
+ (c:/texlive/2025/texmf-dist/tex/latex/pdflscape/pdflscape-nometadata.sty
+Package: pdflscape-nometadata 2025-06-23 v0.14 Display of landscape pages in PDF (HO)
+ (c:/texlive/2025/texmf-dist/tex/generic/iftex/iftex.sty
+Package: iftex 2024/12/12 v1.0g TeX engine tests
+) (c:/texlive/2025/texmf-dist/tex/latex/graphics/lscape.sty
+Package: lscape 2020/05/28 v3.02 Landscape Pages (DPC)
+ (c:/texlive/2025/texmf-dist/tex/latex/graphics/graphics.sty
 Package: graphics 2024/08/06 v1.4g Standard LaTeX Graphics (DPC,SPQR)
  (c:/texlive/2025/texmf-dist/tex/latex/graphics/trig.sty
 Package: trig 2023/12/02 v1.11 sin cos tan (DPC)
@@ -38,7 +41,14 @@ File: graphics.cfg 2016/06/04 v1.11 sample graphics configuration
 Package graphics Info: Driver file: pdftex.def on input line 106.
  (c:/texlive/2025/texmf-dist/tex/latex/graphics-def/pdftex.def
 File: pdftex.def 2025/09/29 v1.2d Graphics/color driver for pdftex
-))
+)))
+Package pdflscape Info: Auto-detected driver: pdftex on input line 81.
+)) (c:/texlive/2025/texmf-dist/tex/latex/graphics/graphicx.sty
+Package: graphicx 2024/12/31 v1.2e Enhanced LaTeX Graphics (DPC,SPQR)
+ (c:/texlive/2025/texmf-dist/tex/latex/graphics/keyval.sty
+Package: keyval 2022/05/29 v1.15 key=value parser (DPC)
+\KV@toks@=\toks17
+)
 \Gin@req@height=\dimen149
 \Gin@req@width=\dimen150
 ) (c:/texlive/2025/texmf-dist/tex/latex/graphics/color.sty
@@ -127,20 +137,20 @@ File: l3backend-pdftex.def 2025-10-09 L3 backend support: PDF output (pdfTeX)
 ) (./report_template.aux)
 \openout1 = `report_template.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 32.
-LaTeX Font Info:    ... okay on input line 32.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 32.
-LaTeX Font Info:    ... okay on input line 32.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 32.
-LaTeX Font Info:    ... okay on input line 32.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 32.
-LaTeX Font Info:    ... okay on input line 32.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 32.
-LaTeX Font Info:    ... okay on input line 32.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 32.
-LaTeX Font Info:    ... okay on input line 32.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 32.
-LaTeX Font Info:    ... okay on input line 32.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 33.
+LaTeX Font Info:    ... okay on input line 33.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 33.
+LaTeX Font Info:    ... okay on input line 33.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 33.
+LaTeX Font Info:    ... okay on input line 33.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 33.
+LaTeX Font Info:    ... okay on input line 33.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 33.
+LaTeX Font Info:    ... okay on input line 33.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 33.
+LaTeX Font Info:    ... okay on input line 33.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 33.
+LaTeX Font Info:    ... okay on input line 33.
  (c:/texlive/2025/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
 \scratchcounter=\count297
@@ -162,35 +172,55 @@ File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Live
 )) [1
 
 {c:/texlive/2025/texmf-var/fonts/map/pdftex/updmap/pdftex.map}] [1]
-<437lab4-datapath.drawio.png, id=12, 1184.07169pt x 572.3784pt>
-File: 437lab4-datapath.drawio.png Graphic file (type png)
-<use 437lab4-datapath.drawio.png>
-Package pdftex.def Info: 437lab4-datapath.drawio.png  used on input line 56.
-(pdftex.def)             Requested size: 469.75502pt x 227.07826pt.
- [2 <./437lab4-datapath.drawio.png>] [3] [4] [5] [6] [7]
-Underfull \hbox (badness 10000) in paragraph at lines 255--258
+<437lab4-Page-4p1.png, id=12, 82.17099pt x 126.32796pt>
+File: 437lab4-Page-4p1.png Graphic file (type png)
+<use 437lab4-Page-4p1.png>
+Package pdftex.def Info: 437lab4-Page-4p1.png  used on input line 59.
+(pdftex.def)             Requested size: 343.072pt x 527.43175pt.
+<437lab4-Page-4.png, id=14, 109.56133pt x 126.32796pt>
+File: 437lab4-Page-4.png Graphic file (type png)
+<use 437lab4-Page-4.png>
+Package pdftex.def Info: 437lab4-Page-4.png  used on input line 70.
+(pdftex.def)             Requested size: 457.42941pt x 527.43175pt.
+<437lab4-Page-4p3.png, id=15, 1023.3432pt x 1090.69884pt>
+File: 437lab4-Page-4p3.png Graphic file (type png)
+<use 437lab4-Page-4p3.png>
+Package pdftex.def Info: 437lab4-Page-4p3.png  used on input line 81.
+(pdftex.def)             Requested size: 469.75984pt x 500.67906pt.
+<437lab4-datapathifde.drawio.png, id=16, 120.40182pt x 107.32095pt>
+File: 437lab4-datapathifde.drawio.png Graphic file (type png)
+<use 437lab4-datapathifde.drawio.png>
+Package pdftex.def Info: 437lab4-datapathifde.drawio.png  used on input line 94.
+(pdftex.def)             Requested size: 469.8573pt x 418.81036pt.
+<437lab4-datapathexmemwb.drawio.png, id=17, 136.95164pt x 143.0946pt>
+File: 437lab4-datapathexmemwb.drawio.png Graphic file (type png)
+<use 437lab4-datapathexmemwb.drawio.png>
+Package pdftex.def Info: 437lab4-datapathexmemwb.drawio.png  used on input line 104.
+(pdftex.def)             Requested size: 469.80045pt x 490.87332pt.
+ [2] [3 <./437lab4-Page-4p1.png>] [4 <./437lab4-Page-4.png>] [5 <./437lab4-Page-4p3.png>] [6 <./437lab4-datapathifde.drawio.png>] [7 <./437lab4-datapathexmemwb.drawio.png>] [8] [9] [10] [11] [12]
+Underfull \hbox (badness 10000) in paragraph at lines 300--303
 
  []
 
-[8] (./report_template.aux)
+[13] (./report_template.aux)
  ***********
 LaTeX2e <2025-11-01>
 L3 programming layer <2026-01-19>
  ***********
  ) 
 Here is how much of TeX's memory you used:
- 2223 strings out of 467533
- 33988 string characters out of 5423668
- 453180 words of memory out of 5000000
- 31134 multiletter control sequences out of 15000+600000
+ 2403 strings out of 467533
+ 38142 string characters out of 5423668
+ 454619 words of memory out of 5000000
+ 31300 multiletter control sequences out of 15000+600000
  635462 words of font info for 67 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 57i,9n,65p,1210b,278s stack positions out of 10000i,1000n,20000p,200000b,200000s
-<c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb>
-Output written on report_template.pdf (9 pages, 2720796 bytes).
+ 87i,9n,93p,1256b,275s stack positions out of 10000i,1000n,20000p,200000b,200000s
+<c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb>
+Output written on report_template.pdf (14 pages, 681609 bytes).
 PDF statistics:
- 87 PDF objects out of 1000 (max. 8388607)
- 53 compressed objects within 1 object stream
+ 116 PDF objects out of 1000 (max. 8388607)
+ 67 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
- 6 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 26 words of extra memory for PDF output out of 10000 (max. 10000000)
 
