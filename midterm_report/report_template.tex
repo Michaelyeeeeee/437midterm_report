@@ -1,0 +1,262 @@
+% This is a template to create your midterm report as a pdf.
+% Just fill in the areas and run pdflatex
+% For more information on LaTeX documents consult The (Not So
+% Short Introduction to LateX2e
+%
+% to compile your report use the command
+% pdflatex reportdocument.tex
+%
+% if you have \ref useage or other cross links
+% you will have to run the above command again
+
+% set 12pt font
+\documentclass[12pt]{article}
+% some useful packages
+\usepackage[pdftex]{graphicx,color}
+\usepackage{amsmath}
+\usepackage{fullpage}
+\usepackage{float}
+\usepackage{fullpage}
+\def\baselinestretch{1.5} % line spaceing
+% set title
+\title{ Processor Prototyping Lab \\
+        Midterm Report}
+% fill in the blanks
+\author{Connor Lai \\ Michael Wu \\
+        Atthin Chandrashekar}
+% \today will put todays date
+% or you can manually put the date in
+\date{October 18, 2026}
+% cover page is a page by itself
+
+\begin{document}
+  \begin{titlepage}
+    \centering
+    \maketitle
+    \vspace*{\fill}
+  \end{titlepage}
+
+% executive overview remember
+% this should be on a page by itself
+  \section{Executive Overview}
+
+  \indent This report explores the implementation of a RISCV CPU and the performance benefits and technicalities of a pipelined design. The most basic version of a RISCV CPU completes all five stages -- that being instruction fetch, intstruction decode, execute, memory, and write back -- all in a single cycle to achieve a net CPI of 1, however, due to its long critcal path, its must use lower clock speeds. To improve the performance of the processor, the design is pipelined, splitting up the CPU into its respective stages, executing one stage per cycle. The pipelined design utilizes overlap between the instructions to still achieve one instruction per cycle execution in the average case while greatly reducing the clock period. While pipelining improves the overall performance of the CPU, it also introduces many hazards. For one, the CPU cannot both fetch an instruction and access data memory at the same time due to the unified memory architecture. 
+  Additionally, the processor needs to handle data hazards from having multiple unfinished instructions in flight simulaneously. Further, jumps and branches require the CPU to erase misevaulated instructions and redirect to the correct instructions. 
+
+  To determine the tangible performance gain from the pipelined design, clock frequency, CPI, total execution time, and FPGA resource utilization were measured and compared between the two processors. By evaluating these metrics across different memory latencies, the effects of pipeline hazards, memory stalls, and increased clock frequency on overall performance could be analyzed. The results showed that the pipelined processor consistently outperformed the single-cycle design, reducing execution time by approximately 16--22\% across all tested memory latencies. At zero memory latency, the pipelined processor achieved a maximum operating frequency of 87.63 MHz compared to 50.03 MHz for the single-cycle design, resulting in a 22.2\% reduction in execution time. However, this improvement came at the cost of increased hardware complexity and FPGA resource utilization, with 61.2\% more slice LUTs and 94.7\% more slice registers. Overall, the results demonstrate that pipelining improves processor performance by increasing operating frequency, despite the additional cycles introduced by pipeline hazards and memory stalls.
+
+\newpage
+
+  \section{Processor Design}
+  \subsection{Single Cycle}
+  
+  \subsection{Pipelined}
+  \begin{figure}[hp]
+    \begin{center}
+      \includegraphics[width=\textwidth]{437lab4-datapath.drawio.png}
+    % You can change the type of figure to a .png, .pdf, .jpg, .mps
+    \end{center}
+
+    \caption{Single Cycle Block Diagram}
+      \label{fig:processor}
+  \end{figure}
+  In order to convert the single cycle CPU into a pipelined processor pipeline registers were added between stages to carry each instructions data and control information. The pipeline was split into 5 stages consisting of instruction fetch, decode, execute, memory, and writeback. The pipelined procesor introduces hazards that weren't in the single cycle so we added a hazard and forwarding unit to detect and prevent the errors. The request unit from the single cycle was removed in the pipeline as the memory register had the same functionality and keeping the request unit would add an extra pipeline stage.
+  
+  \subsection{Forwarding Unit}
+  The forwarding unit manages read after write dependecies by supplying results from memory or writeback directly to execute. It checks both operands independantly and forwards the newest possible result. 
+
+  \subsection{Hazard Unit}
+  The hazard unit manages control hazards, structural hazards, and specfically the load-use data hazard. On an incorrect jump or for a jump redirect the hazard unit flushes any younger instructions. When multiple stages of the pipeline have simultaneous memory requests the hazard unit stalls the instructions until the memory controller returns the access completion signals. For the load use hazard it holds the instruction fetch, and decode stages, and inserts a bubble into execute to allow the load to advance until the results are available.
+  
+  \subsection{Branch Prediction}
+  In order to minimize the branch prediciton rate a direct mapped branch prediction table and branch target buffer was implemented. The branch prediction table consists of two bit saturating counter that are indexed 
+  % Uncomment after you create the block diagram graphic.
+ 
+
+
+  Text for discussing your designs %in Figure \ref{fig:processor}
+
+  \section{Results}
+
+  The single-cycle and pipelined processors were evaluated using the mergesort.asm benchmark at memory latencies of 0, 2, 6, and 10 cycles. Both designs were synthesized and simulated using mapped gate timing. Maximum operating frequencies were obtained from exec\_data\_sweep.sh, while dynamic instruction counts and CPUCLK cycle counts were obtained from make system.sim. Only CPUCLK cycles were used for CPI and execution time calculations. FPGA resource utilization was obtained from build\/utilization.rpt.
+
+  The maximum operating frequency was determined by the smaller of half the MAIN frequency and the CPUCLK frequency:
+  \[
+  f_{\max}=\min\left(\frac{f_{\mathrm{MAIN}}}{2},f_{\mathrm{CPUCLK}}\right)
+  \]
+
+  Average cycles per instruction (CPI) and total execution time were calculated as:
+
+  \[
+  \mathrm{CPI}=\frac{N_{\mathrm{cycles}}}{N_{\mathrm{instructions}}}
+  \qquad
+  T_{\mathrm{exec}}(\mu s)=\frac{N_{\mathrm{cycles}}}{f_{\max}(\mathrm{MHz})}
+  \]
+
+  The ideal instruction latency was calculated using the clock period and the number of pipeline stages:
+
+  \[
+  T_{\mathrm{ideal,single}}(\mathrm{ns})
+  =\frac{1000}{f_{\max}(\mathrm{MHz})}
+  \]
+
+  \[
+  T_{\mathrm{ideal,pipeline}}(\mathrm{ns})
+  =\frac{5000}{f_{\max}(\mathrm{MHz})}
+  \]
+
+  These metrics were used to compare execution performance, memory latency
+  sensitivity, and hardware resource requirements between the two architectures.
+
+  \subsection{Single Cycle}
+
+  The single-cycle processor was evaluated using the mergesort.asm benchmark at memory latencies of 0, 2, 6, and 10 cycles. Maximum operating
+  frequency was determined from synthesis timing reports using
+  $f_{\max}=\min(f_{\mathrm{MAIN}}/2,f_{\mathrm{CPUCLK}})$.
+  CPU cycle counts and dynamic instruction counts were obtained from simulation,
+  while FPGA resource utilization was obtained from the synthesis reports.
+  Table~\ref{tb:single_cycle_results} summarizes the results.
+
+  \begin{table}[H]
+      \centering
+      \small
+      \begin{tabular}{|l|c|c|c|c|}
+          \hline
+          \textbf{Specification} &
+          \textbf{LAT = 0} &
+          \textbf{LAT = 2} &
+          \textbf{LAT = 6} &
+          \textbf{LAT = 10} \\ \hline
+
+          MAIN Fmax (MHz) & 100.35 & 100.03 & 100.03 & 100.03 \\ \hline
+          CPUCLK Fmax (MHz) & 50.03 & 50.09 & 50.09 & 50.09 \\ \hline
+          Effective Fmax (MHz) & 50.03 & 50.015 & 50.015 & 50.015 \\ \hline
+          CPU Cycles & 6907 & 13814 & 27628 & 41442 \\ \hline
+          Instructions & 5409 & 5409 & 5409 & 5409 \\ \hline
+          Average CPI & 1.277 & 2.554 & 5.108 & 7.662 \\ \hline
+          Ideal Latency (ns) & 19.988 & 19.994 & 19.994 & 19.994 \\ \hline
+          Execution Time ($\mu$s) & 138.06 & 276.20 & 552.39 & 828.59 \\ \hline
+          Slice LUTs & 1866 & 1866 & 1866 & 1866 \\ \hline
+          Slice Registers & 1180 & 1180 & 1180 & 1180 \\ \hline
+          F7 Muxes & 410 & 410 & 410 & 410 \\ \hline
+          F8 Muxes & 110 & 110 & 110 & 110 \\ \hline
+      \end{tabular}
+      \caption{Single-Cycle Processor Performance and FPGA Utilization}
+      \label{tb:single_cycle_results}
+  \end{table}
+
+  The single-cycle processor maintained an operating frequency of approximately
+  50 MHz across all memory latency configurations. However, CPI increased from
+  1.277 at LAT = 0 to 7.662 at LAT = 10, resulting in a sixfold increase in
+  execution time from 138.06 to 828.59 $\mu$s. The instruction count
+  of 5,409 indicates that the additional execution cycles were caused by
+  memory-related delays rather than changes in program execution. These results
+  demonstrate that memory latency significantly affects processor performance
+  despite relatively constant operating frequency.
+
+  \subsection{Pipelined}
+
+  The five-stage pipelined processor was evaluated using the same mergesort.asm benchmark at memory latencies of 0, 2, 6, and 10 cycles. Table~\ref{tb:pipeline_results} summarizes the processor's
+  performance and FPGA resource utilization.
+
+  \begin{table}[H]
+      \centering
+      \small
+      \begin{tabular}{|l|c|c|c|c|}
+          \hline
+          \textbf{Specification} &
+          \textbf{LAT = 0} &
+          \textbf{LAT = 2} &
+          \textbf{LAT = 6} &
+          \textbf{LAT = 10} \\ \hline
+
+          MAIN Fmax (MHz) & 177.43 & 143.39 & 143.39 & 143.39 \\ \hline
+          CPUCLK Fmax (MHz) & 87.63 & 71.695 & 71.695 & 71.695 \\ \hline
+          Effective Fmax (MHz) & 87.63 & 71.695 & 71.695 & 71.695 \\ \hline
+          CPU Cycles & 9408 & 16451 & 33197 & 47011 \\ \hline
+          Instructions & 5409 & 5409 & 5409 & 5409 \\ \hline
+          Average CPI & 1.739 & 3.041 & 6.137 & 8.691 \\ \hline
+          Ideal Latency (ns) & 57.06 & 69.74 & 69.74 & 69.74 \\ \hline
+          Execution Time ($\mu$s) & 107.36 & 229.46 & 463.03 & 655.71 \\ \hline
+          Slice LUTs & 3008 & 3008 & 3008 & 3008 \\ \hline
+          Slice Registers & 2297 & 2297 & 2297 & 2297 \\ \hline
+          F7 Muxes & 453 & 453 & 453 & 453 \\ \hline
+          F8 Muxes & 64 & 64 & 64 & 64 \\ \hline
+      \end{tabular}
+      \caption{Pipelined Processor Performance and FPGA Utilization}
+      \label{tb:pipeline_results}
+  \end{table}
+
+  The pipelined processor achieved a maximum operating frequency of
+  87.63 MHz at LAT = 0, compared to approximately 50 MHz for the
+  single-cycle processor. Despite its higher CPI of 1.739, the shorter
+  clock period reduced total execution time to approximately
+  107.36 $\mu$s. As memory latency increased, CPI rose to 8.691 at
+  LAT = 10, increasing execution time to 655.71 $\mu$s. The higher
+  operating frequency allowed the pipelined processor to maintain
+  lower execution times than the single-cycle design across all
+  tested memory latencies.
+
+  \subsection{Performance Comparison}
+
+  The pipelined processor outperformed the single-cycle processor across all memory latencies despite having a higher CPI. Its higher operating frequency
+  reduced execution time by 22.2\% at LAT = 0 and 20.9\% at LAT = 10.
+  Table~\ref{tb:performance_comparison} summarizes the performance improvements.
+
+  \begin{table}[H]
+      \centering
+      \small
+      \begin{tabular}{|c|c|c|c|c|}
+          \hline
+          \textbf{LAT} &
+          \textbf{Single ($\mu$s)} &
+          \textbf{Pipeline ($\mu$s)} &
+          \textbf{Speedup} &
+          \textbf{Reduction} \\ \hline
+          0 & 138.06 & 107.36 & 1.286 & 22.2\% \\ \hline
+          2 & 276.20 & 229.46 & 1.204 & 16.9\% \\ \hline
+          6 & 552.39 & 463.03 & 1.193 & 16.2\% \\ \hline
+          10 & 828.59 & 655.71 & 1.264 & 20.9\% \\ \hline
+      \end{tabular}
+      \caption{Single-Cycle and Pipelined Processor Performance Comparison}
+      \label{tb:performance_comparison}
+  \end{table}
+
+  Although pipeline stalls and hazards increased CPI, the higher clock frequency compensated for this, resulting in execution time reductions of approximately 16--22\% across the tested memory latencies.
+
+  \begin{table}[H]
+    \centering
+    \small
+    \begin{tabular}{|l|c|c|c|}
+        \hline
+        \textbf{Resource} &
+        \textbf{Single-Cycle} &
+        \textbf{Pipelined} &
+        \textbf{Change} \\ \hline
+        Slice LUTs & 1866 & 3008 & +61.2\% \\ \hline
+        Slice Registers & 1180 & 2297 & +94.7\% \\ \hline
+        F7 Muxes & 410 & 453 & +10.5\% \\ \hline
+        F8 Muxes & 110 & 64 & -41.8\% \\ \hline
+    \end{tabular}
+    \caption{FPGA Resource Utilization Comparison}
+    \label{tb:resource_comparison}
+  \end{table}
+
+  The performance improvement comes at the cost of additional FPGA resources, with the pipelined processor requiring 61.2\% more slice LUTs and 94.7\% more slice Registers. This increased resource utilization reflects the additional pipeline registers, forwarding logic, hazard control, and branch prediction logic required for pipelined execution.
+
+  \section{Conclusion}
+
+  The mergesort benchmark showed that the pipelined processor completed execution faster than the single-cycle at every tested memory latency. The CPI of the pipeline processor was higher due to hazards and stalls, the increased clock frequency compensated for the extra cycles. Overall the execution time was 16--22\% faster, with the largest reduction being at LAT = 0. 
+
+  The increase in performance came at the cost of resource utilization. The 
+
+  \section{Contributions}
+
+  \noindent\textbf{Connor Lai:}
+  Contributed to the development and verification of the pipelined processor, including the forwarding unit, hazard unit testbench, overall datapath integration, debugging, and testing. Also assisted with performance measurements for CPI and execution time, synthesis, and analysis of results.
+  \newline
+
+  \noindent\textbf{Michael Wu:}
+  Contributed to the development of the single cycle CPU design and pipelined processor. This includes the hazard unit, forwarding unit testbench, pipeline control, and overall datapath integration, debugging, and testing. Also assisted with performance analysis and synthesis.
+
+\end{document}
